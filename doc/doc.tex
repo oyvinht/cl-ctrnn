@@ -1,0 +1,158 @@
+\documentclass[english]{article}
+\usepackage[]{acronym}
+\usepackage[]{charter}
+\usepackage[]{fullpage}
+\usepackage[]{listings}
+\usepackage[utf-8]{inputenc}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{12pt}
+
+\begin{document}
+
+\part{Conventions}
+\section{Acronyms}
+
+\begin{acronym}
+\acro{ASDF}{Another System Definition Facility}
+\acro{CTRNN}{Continuous Time Recurrent Neural Network}
+\end{acronym}
+
+\section{Licensing}
+
+\section{Naming}
+All accessors are prefixed by class name and ``-'', e.g. ``neuron-membrane-potential''. All destructive functions and methods are suffixed by an exclamation mark, e.g. ``add-neuron!''.
+
+\newpage
+\part{Usage}
+\newpage
+\section{Loading}
+\ac{ASDF} is used for loading the library. Assuming that \ac{ASDF} is loaded, ac{CL-CTRNN} can be loaded by:
+
+\begin{lstlisting}
+(push \#P"/path/to/cl-ctrnn'' asdf:*central-registry*)
+(asdf:oos 'asdf:load-op 'cl-ctrnn)
+\end{lstlisting}
+
+\section{Examples}
+
+
+\newpage
+\part{Classes}
+\newpage
+\section{neural-network}
+\label{neural-network}
+
+\subsection{Description}
+A \ac{CTRNN} that simulates a real neural network. Contains neurons(section \ref{neuron}) that may be interconnected with synapses(section \ref{synapse}) and/or connected to external sensors and/or motors.
+
+\subsection{Superclasses}
+None.
+
+\subsection{Known subclasses}
+None.
+
+\subsection{Specific methods}
+
+\subsubsection{Accessors}
+neural-network-neurons\\
+
+\subsubsection{Other}
+add-neuron! (neural-network neuron)\\
+synchronously-update-membrane-potentials! (neural-network)\\
+
+
+\newpage
+\section{neuron}
+\label{neuron}
+
+\subsection{Description}
+Representation of a single neuron.
+
+\subsection{Superclasses}
+None.
+
+\subsection{Known subclasses}
+motor-neuron(section \ref{motor-neuron}), sensor-neuron(section \ref{sensor-neuron}).
+
+\subsection{Specific methods}
+
+\subsubsection{Accessors}
+neuron-bias\\
+neuron-dendrites\\
+neuron-external-current\\
+neuron-external-current-magnitude\\
+neuron-maximum-membrane-potential\\
+neuron-membrane-potential\\
+neuron-snapshot-firing-frequency\\
+neuron-time-constant\\
+
+\subsubsection{Other}
+add-dendrite! (neuron synapse)\\
+firing-frequency (neuron)\\
+update-membrane-potential! (neuron)\\
+
+
+\newpage
+\section{motor-neuron}
+\label{motor-neuron}
+
+\subsection{Description}
+A neuron that will call an external motor-function after updating the membrane-potential.
+
+\subsection{Superclasses}
+neuron(\ref{neuron})
+
+\subsection{Known subclasses}
+None.
+
+\subsection{Specific methods}
+\subsubsection{Accessors}
+motor-neuron-motor-function\\
+
+\subsubsection{Other}
+None.\\
+
+
+\newpage
+\section{sensor-neuron}
+\label{sensor-neuron}
+
+\subsection{Description}
+A neuron that will call an external sensor function before updating membrane-potential.
+
+\subsection{Superclasses}
+neuron(\ref{neuron})
+
+\subsection{Known subclasses}
+None.
+
+\subsection{Specific methods}
+\textbf{Accessors}
+sensor-neuron-sensor-function\\
+
+\textbf{Other}
+None.\\
+
+\section{synapse}
+\label{synapse}
+
+\subsection{Description}
+A weighted connection between two neurons. Neurons keep synapses in dendrites(section \ref{neuron}), and each synapse knows only its from-neuron.
+
+\subsection{Superclasses}
+None.
+
+\subsection{Known subclasses}
+None.
+
+\subsection{Methods}
+
+\subsubsection{Accessors}
+synapse-from-neuron\\
+synapse-strength\\
+
+\subsubsection{Other}
+add-dendrite! (neuron, synapse)\\
+
+\end{document}
